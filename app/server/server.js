@@ -106,12 +106,8 @@ var categorizeRequest = function (req) {
 };
 
 var supported_browser = function (browser) {
-  return true;
-
-  // For now, we don't actually deny anyone. The unsupported browser
-  // page isn't very good.
-  //
-  // return !(browser.family === 'IE' && browser.major <= 5);
+  // Deny IE < 9
+  return !(browser.family === 'IE' && browser.major < 9);
 };
 
 
