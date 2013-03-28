@@ -1,10 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Tell your story | TaleIt</title>
 <style type="text/css">
-<!--
 body {
-  background: #ffdddd;
+  background: #FBF9F9;
+}
+
+.container{
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 200px;
+}
+
+img{
+  margin: 20px auto;
+  display: block;
+}
+
+.wrapper{
+  background: white;
+  border: 2px solid #e9e9e9;
+  text-align: center;
 }
 .box {
   position: fixed;
@@ -20,31 +37,37 @@ body {
   border-style: solid;
 
   background: white;
-  text-align: center;
 }
 .header {
   font-size: 2em;
   padding-top: 10px;
-  padding-bottom: 10px
-
+  padding-bottom: 10px;
+  text-align: center;
 }
 p {
   font-size: 1.2em;
   margin-left: 10px;
   margin-right: 10px;
 }
--->
 </style>
 </head>
 
 <body>
-  <div class="box">
-    <div class="header">Browser not supported</div>
-    <p>
-      Sorry, this application does not support this web browser.  Meteor
-      supports modern versions of Safari, Firefox, Chrome, Opera, and
-      Internet Explorer versions 6 and above.
-    </p>
+  <div class="container">
+    <img src="http://cdn.taleit.com/logo.png" alt="TaleIt">
+    <div class="wrapper">
+      <h1 class="header">Unsupported Browser</h1>
+      <p>TaleIt requires a modern browser to bring you the best stories from around the world. Please upgrade your browser to any of the free offerings below.</p>
+      <div class="browser">
+        <a href="http://www.mozilla.org/en-US/firefox/new/"><img src="http://mozorg.cdn.mozilla.net/media/img/firefox/new/header-firefox.png" alt="Mozilla Firefox"></a>
+      </div>
+      <div class="browser">
+        <a href="https://www.google.com/intl/en/chrome/browser/"><img src="https://www.google.com/intl/en/chrome/assets/common/images/chrome_logo_2x.png" alt="Google Chrome"></a>
+      </div>
+      <div class="browser">
+        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie"><img src="https://www.google.com/intl/en/chrome/assets/common/images/chrome_logo_2x.png" alt="Google Chrome"></a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
