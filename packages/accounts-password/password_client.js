@@ -24,42 +24,39 @@
   // @param password {String}
   // @param callback {Function(error|undefined)}
   Meteor.loginWithPassword = function (selector, password, callback) {
-    Deps.nonreactive(function(){
-      var srp = new Meteor._srp.Client(password);
-      var request = srp.startExchange();
+    var srp = new Meteor._srp.Client(password);
+    var request = srp.startExchange();
 
-      if (typeof selector === 'string')
-        if (selector.indexOf('@') === -1)
-          selector = {username: selector};
-        else
-          selector = {email: selector};
+    if (typeof selector === 'string')
+      if (selector.indexOf('@') === -1)
+        selector = {username: selector};
+      else
+        selector = {email: selector};
 
-      request.user = selector;
+    request.user = selector;
 
-      // Normally, we only set Meteor.loggingIn() to true within
-      // Accounts.callLoginMethod, but we'd also like it to be true during the
-      // password exchange. So we set it to true here, and clear it on error; in
-      // the non-error case, it gets cleared by callLoginMethod.
-      Accounts._setLoggingIn(true);
-      Meteor.apply('beginPasswordExchange', [request], function (error, result) {
-        if (error || !result) {
-          Accounts._setLoggingIn(false);
-          error = error || new Error("No result from call to beginPasswordExchange");
-          callback && callback(error);
-          return;
-        }
+    // Normally, we only set Meteor.loggingIn() to true within
+    // Accounts.callLoginMethod, but we'd also like it to be true during the
+    // password exchange. So we set it to true here, and clear it on error; in
+    // the non-error case, it gets cleared by callLoginMethod.
+    Accounts._setLoggingIn(true);
+    Meteor.apply('beginPasswordExchange', [request], function (error, result) {
+      if (error || !result) {
+        Accounts._setLoggingIn(false);
+        error = error || new Error("No result from call to beginPasswordExchange");
+        callback && callback(error);
+        return;
+      }
 
-        var response = srp.respondToChallenge(result);
-        Accounts.callLoginMethod({
-          methodArguments: [{srp: response}],
-          validateResult: function (result) {
-            if (!srp.verifyConfirmation({HAMK: result.HAMK}))
-              throw new Error("Server is cheating!");
-          },
-          userCallback: callback});
-      });
-    })
-    
+      var response = srp.respondToChallenge(result);
+      Accounts.callLoginMethod({
+        methodArguments: [{srp: response}],
+        validateResult: function (result) {
+          if (!srp.verifyConfirmation({HAMK: result.HAMK}))
+            throw new Error("Server is cheating!");
+        },
+        userCallback: callback});
+    });
   };
 
 
