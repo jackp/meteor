@@ -23,7 +23,7 @@
   //     it contains "@".
   // @param password {String}
   // @param callback {Function(error|undefined)}
-  Meteor.loginWithPassword = function (selector, password, callback) {
+  Meteor.loginWithPassword = Deps.nonreactive(function (selector, password, callback) {
     var srp = new Meteor._srp.Client(password);
     var request = srp.startExchange();
 
@@ -57,7 +57,7 @@
         },
         userCallback: callback});
     });
-  };
+  });
 
 
   // @param oldPassword {String|null}
